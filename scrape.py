@@ -18,7 +18,13 @@ with open('words.txt', encoding='utf-8') as f:
 
         # get audio host
         soup = BeautifulSoup(content, features="html.parser")
-        audio_src = soup.body.find_all("source")[0]["src"]
+        audio_src = soup.body.find_all("source")
+
+        if len(audio_src) == 0:
+            print("No audio available for %s. Skipping..." % word)
+            continue
+
+        audio_src = audio_src[0]["src"]
         audio_src = "http://" + audio_src[2:]
         
         # download audio
